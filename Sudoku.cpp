@@ -19,7 +19,7 @@ public:
     void play()
     {
         printWelcomeBanner();
-        print();
+        printSudoku();
         printInstructions();
 
         int i;
@@ -46,7 +46,7 @@ public:
                 clearInvalidInput();
             }
             clearScreen();
-            print();
+            printSudoku();
         }
     }
 
@@ -56,7 +56,7 @@ private:
         if (isSolved()) {
             clearScreen();
             printSolutionBanner();
-            print();
+            printSudoku();
             return true;
         } 
 
@@ -170,7 +170,7 @@ private:
                 cell = Empty;
     }
 
-    void print() const
+    void printSudoku() const
     {
         std::cout << "\n\n";
         std::cout << "   || 0 | 1 | 2 || 3 | 4 | 5 || 6 | 7 | 8 ||\n";
