@@ -170,7 +170,7 @@ private:
         std::cout << "   || 0 | 1 | 2 || 3 | 4 | 5 || 6 | 7 | 8 ||\n";
         for (int i = 0; i < Size; ++i) {
             // third row?
-            if (i % Size == 0)
+            if (i % CellGroupSize == 0)
                 std::cout << "============================================\n";
             else 
                 std::cout << "--------------------------------------------\n";
@@ -184,7 +184,7 @@ private:
                     std::cout << " " << value << " |";
                 }
                 // third col?
-                if ((j + 1) % Size == 0)
+                if ((j + 1) % CellGroupSize == 0)
                     std::cout << "|";
             }
             std::cout << "\n";
