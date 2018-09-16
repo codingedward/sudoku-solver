@@ -5,7 +5,7 @@ This is a C++ implementation of a brute force recursive backtracking algorithm f
 
 ## Builiding
 ```
-$ g++ Sudoku.cpp
+$ g++ --std=c++11 Sudoku.cpp
 ```
 
 ## Running
