@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 
+#define QUIT "X"
+#define SOLVE "S"
+
 typedef unsigned char uchar;
 
 class Sudoku {
@@ -30,9 +33,9 @@ public:
             printPrompt();
             std::cin >> input;
             std::transform(input.begin(), input.end(), input.begin(), ::toupper);
-            if (input == "X")
+            if (input == QUIT)
                 return;
-            else if (input == "S") {
+            else if (input == SOLVE) {
                 solve();
                 return;
             }
@@ -84,15 +87,6 @@ private:
         for (int i = 0; i < Size; ++i)
             for (int j = 0; j < Size; ++j)
                 if (getValue(i, j) == Empty || !cellIsUnique(i, j))
-                    return false;
-        return true;
-    }
-
-    bool isValid() const 
-    {
-        for (int i = 0; i < Size; ++i)
-            for (int j = 0; j < Size; ++j)
-                if (!cellIsUnique(i, j))
                     return false;
         return true;
     }
@@ -175,7 +169,8 @@ private:
         std::cout << "\n\n";
         std::cout << "   || 0 | 1 | 2 || 3 | 4 | 5 || 6 | 7 | 8 ||\n";
         for (int i = 0; i < Size; ++i) {
-            if (i % 3 == 0)
+            // third row?
+            if (i % Size == 0)
                 std::cout << "============================================\n";
             else 
                 std::cout << "--------------------------------------------\n";
@@ -188,7 +183,8 @@ private:
                 } else {
                     std::cout << " " << value << " |";
                 }
-                if ((j + 1) % 3 == 0)
+                // third col?
+                if ((j + 1) % Size == 0)
                     std::cout << "|";
             }
             std::cout << "\n";
@@ -220,7 +216,7 @@ private:
     
     inline void printPrompt()
     {
-        std::cout << "\nTo solve, enter S, to quit enter X."
+        std::cout << "\nTo solve, enter " << SOLVE << ", to quit enter " <<  QUIT << "."
             << "\n(i j value)> ";
     }
     
@@ -254,3 +250,4 @@ int main()
     Sudoku sudoku;
     sudoku.play();
 }
+
