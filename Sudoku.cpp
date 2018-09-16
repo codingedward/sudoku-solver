@@ -1,9 +1,9 @@
 #include <algorithm>
-#include <iostream>
-#include <vector>
 #include <cstdlib>
+#include <iostream>
 #include <limits>
 #include <string>
+#include <vector>
 
 typedef unsigned char uchar;
 
@@ -18,34 +18,32 @@ public:
 
     void play()
     {
-        printBanner();
+        printWelcomeBanner();
         print();
         printInstructions();
 
         int i;
         int j;
         int value;
-        std::string tmp;
+        std::string input;
         while (true) {
-            std::cout << "\nTo solve, enter S, to quit enter X."
-                << "\n(i j value)> ";
-            std::cin >> tmp;
-            std::transform(tmp.begin(), tmp.end(), tmp.begin(), ::toupper);
-            if (tmp == "X")
+            printPrompt();
+            std::cin >> input;
+            std::transform(input.begin(), input.end(), input.begin(), ::toupper);
+            if (input == "X")
                 return;
-            else if (tmp == "S") {
+            else if (input == "S") {
                 solve();
                 return;
             }
 
-            i = std::atoi(tmp.c_str());
+            i = std::atoi(input.c_str());
             std::cin >> j >> value;
             if (canPlaceValueInCell(i, j, value)) {
                 setValue(i, j, value);
             } else {
-                std::cout << "\nCannot enter that value!\n";
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<int>::max(), '\n');
+                printInvalidInput();
+                clearInvalidInput();
             }
             clearScreen();
             print();
@@ -57,9 +55,7 @@ private:
     {
         if (isSolved()) {
             clearScreen();
-            std::cout << "############################################\n"
-                << "################# SOLUTION #################\n"
-                << "############################################\n";
+            printSolutionBanner();
             print();
             return true;
         } 
@@ -167,7 +163,7 @@ private:
         return groupIndex;
     }
 
-    void clear() 
+    inline void clear() 
     {
         for (auto & column : m_board)
             for (auto & cell : column)
@@ -200,19 +196,43 @@ private:
         std::cout << "============================================\n";
     }
 
-    void printBanner() 
+    inline void printWelcomeBanner() 
     {
         std::cout << "********************************************\n"
             << "*************** SUDOKU SOLVER **************\n"
             << "********************************************";
     }
+    
+    inline void printSolutionBanner()
+    {
+        std::cout << "############################################\n"
+            << "################# SOLUTION #################\n"
+            << "############################################\n";        
+    }
 
-    void printInstructions()
+    inline void printInstructions()
     {
         std::cout << "\nINSTRUCTIONS\n"
             << "============\n";
         std::cout << "Enter the values in ith row and jth column as: \n"
             << "(i j value) without brackets and press Enter.\n";
+    }
+    
+    inline void printPrompt()
+    {
+        std::cout << "\nTo solve, enter S, to quit enter X."
+            << "\n(i j value)> ";
+    }
+    
+    inline void printInvalidInput()
+    {
+        std::cout << "\nCannot enter that value!\n";
+    }
+    
+    void clearInvalidInput()
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<int>::max(), '\n');        
     }
 
     void clearScreen()
